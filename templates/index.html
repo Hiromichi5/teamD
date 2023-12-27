@@ -1,0 +1,27 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Display</title>
+</head>
+<body>
+    <h1>Data from Database</h1>
+    
+    <ul id="data-list"></ul>
+
+    <script>
+        // Flaskから渡されたデータを表示
+        const data = {{ data | tojson | safe }};
+        const dataList = document.getElementById('data-list');
+
+        data.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = JSON.stringify(item);
+            dataList.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>
