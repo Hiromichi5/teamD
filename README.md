@@ -49,7 +49,10 @@
 |timestamp | 投稿時間 |
 |username | ユーザーの名前 |
 |followers_count| フォロワー数 |
-|media_count | 投稿数|
+|media_count | 投稿数|<br>
+
+※いいねとコメントが取得できていないことに今書きながら気づきました。。。<br>
+年明けにやります😢
 
 
 ## バック
