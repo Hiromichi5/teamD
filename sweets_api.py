@@ -5,40 +5,40 @@ url = "https://sysbird.jp/toriko/api/"
 api_key = "guest"  # ここに実際のAPIキーを追加してください
 sweets_type = [1, 2, 3, 4, 5, 99]
 table_names = ['Snack', 'Chocolate', 'Cookie', 'Candy', 'Rice_cracker', 'Limited_sweets']
+def sweet_to_database():
+    for i, table_name in zip(sweets_type, table_names):
+        params = {"apikey": api_key, "format": "json", "type": i, "max":30}
+        #type
+        #1:スナック, 2:チョコ, 3:クッキー・洋菓子, 4:飴・ガム, 5:せんべい・和風, 99:限定お菓子
+        try:
+            # Web APIにリクエストを送信
+            response = requests.get(url, params=params)
 
-for i, table_name in zip(sweets_type, table_names):
-    params = {"apikey": api_key, "format": "json", "type": i, "max":30}
-    #type
-    #1:スナック, 2:チョコ, 3:クッキー・洋菓子, 4:飴・ガム, 5:せんべい・和風, 99:限定お菓子
-    try:
-        # Web APIにリクエストを送信
-        response = requests.get(url, params=params)
+            # レスポンスが成功 (HTTP ステータスコード 200) の場合
+            if response.status_code == 200:
+                try:
+                    # レスポンスからお菓子情報を取得
+                    data = response.json()
+                    # テストデータを保存
+                    database.save_data(data,table_name,'sweets.db')
+                    # 菓子名・メーカーの表示
+                    #print("菓子名・メーカー:")
+                    #for item in data.get("item", []):
+                    #    print(item.get("name", "None"), item.get("maker", "None"))
 
-        # レスポンスが成功 (HTTP ステータスコード 200) の場合
-        if response.status_code == 200:
-            try:
-                # レスポンスからお菓子情報を取得
-                data = response.json()
-                # テストデータを保存
-                database.save_data(data,table_name,'sweets.db')
-                # 菓子名・メーカーの表示
-                #print("菓子名・メーカー:")
-                #for item in data.get("item", []):
-                #    print(item.get("name", "None"), item.get("maker", "None"))
+                except ValueError as json_error:
+                    # JSON データが正しくない場合
+                    print(f"Web API からのレスポンスが正しい JSON フォーマットではありません。エラー: {json_error}")
 
-            except ValueError as json_error:
-                # JSON データが正しくない場合
-                print(f"Web API からのレスポンスが正しい JSON フォーマットではありません。エラー: {json_error}")
+            else:
+                # レスポンスが失敗の場合
+                print(f"Web API リクエストが失敗しました。ステータスコード: {response.status_code}")
 
-        else:
-            # レスポンスが失敗の場合
-            print(f"Web API リクエストが失敗しました。ステータスコード: {response.status_code}")
-
-    except Exception as e:
-        print(f"エラーが発生しました: {e}")
-
-# データベースの内容を表示
-database.display_database_contents('sweets.db')
+        except Exception as e:
+            print(f"エラーが発生しました: {e}")
+if __name__ == "__main__":
+    # データベースの内容を表示
+    database.display_database_contents('sweets.db')
 
 #レスポンスの例
 #{ 'id': '11241',
