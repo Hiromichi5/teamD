@@ -113,13 +113,15 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS Instagram (
         id TEXT PRIMARY KEY,
+        like_count INTEGER,
+        comments_count INTEGER,
+        followers_count INTEGER,
+        media_count INTEGER,
         caption TEXT,
         media_url TEXT,
         permalink TEXT,
         timestamp TEXT,
-        username TEXT,
-        followers_count INTEGER,
-        media_count INTEGER
+        username TEXT
     )
 ''')
 
@@ -204,6 +206,7 @@ def save_data(data, table_name, database_file):
             conn = sqlite3.connect(database_file)
             cursor = conn.cursor()
 
+            print("テーブル：",table_name)
             for item in data['item']:
                 # 空の辞書が返される時はNoneにする
                 kana_json = None if isinstance(item['kana'], dict) else item['kana']
@@ -223,7 +226,7 @@ def save_data(data, table_name, database_file):
                     kana_json,
                     maker_json,
                     price_json,
-                    item['type'],
+                    type_json,
                     datetime.strptime(item['regist'], "%Y年%m月%d日").date(),
                     item['url'],
                     tags_json,
@@ -241,6 +244,7 @@ def save_data(data, table_name, database_file):
                 conn.close()
     else:
         try:
+            #print("テーブル：",table_name)
             # SQLiteデータベースに接続
             conn = sqlite3.connect(database_file)
             cursor = conn.cursor()
@@ -250,16 +254,18 @@ def save_data(data, table_name, database_file):
                     media_url_json = None if 'media_url' not in item else str(item['media_url'])
                     # データベースに挿入
                     cursor.execute(f'''
-                        INSERT INTO {table_name} VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                        INSERT INTO {table_name} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ''', (
                         item['id'],
+                        item['like_count'],
+                        item['comments_count'],
+                        data['business_discovery']['followers_count'],
+                        data['business_discovery']['media_count'],
                         item['caption'],
                         media_url_json,
                         item['permalink'],
                         item['timestamp'],
-                        item['username'],
-                        data['business_discovery']['followers_count'],
-                        data['business_discovery']['media_count']
+                        item['username']
                     ))
                     conn.commit()
                     print(f'Instagramデータ {item["id"]} をデータベースに保存しました。')
@@ -306,14 +312,70 @@ def clear_database(database_file):
         if conn:
             conn.close()
 
-#
+# instagramテーブルをいいね順に並び替えて新しいテーブルを作成する関数
+def create_ordered_table(database_file, source_table, destination_table, order_by_column):
+    try:
+        # SQLiteデータベースに接続
+        conn = sqlite3.connect(database_file)
+        cursor = conn.cursor()
+
+        # 新しいテーブルを作成
+        cursor.execute(f'''
+            CREATE TABLE IF NOT EXISTS {destination_table} AS
+            SELECT * FROM {source_table}
+            ORDER BY {order_by_column} DESC;
+        ''')
+
+        # 変更をコミット
+        conn.commit()
+        print(f'{destination_table} テーブルを作成しました。')
+
+    except Exception as e:
+        print(f'テーブルの作成中にエラーが発生しました: {e}')
+
+    finally:
+        # データベース接続をクローズ
+        if conn:
+            conn.close()
+
+#関係のない投稿を削除する関数
+def delete_instagram_data_without_any_keyword(database_file):
+    try:
+        # SQLiteデータベースに接続
+        conn = sqlite3.connect(database_file)
+        cursor = conn.cursor()
+
+        # 指定された条件に基づいてデータを削除
+        cursor.execute('''
+            DELETE FROM Instagram
+            WHERE NOT (
+                caption LIKE '%新発売%'
+                OR caption LIKE '%新作%'
+                OR caption LIKE '%発売中%'
+            );
+        ''')
+
+        # 変更をコミット
+        conn.commit()
+        print('指定されたいずれかのキーワードを含まないInstagramデータを削除しました。')
+
+    except Exception as e:
+        print(f'データの削除中にエラーが発生しました: {e}')
+
+    finally:
+        # データベース接続をクローズ
+        if conn:
+            conn.close()
+
 if __name__ == "__main__":
 
     # データベースに保存
     #save_data(data, 'Instagram', 'sweets.db')
-    account_list = ['sweetroad7','matchannel_official']
+    account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson']
+    #account_list = ['yorushika_official_']
     instagram_api.instagram_to_database(account_list)
     sweets_api.sweet_to_database()
+    delete_instagram_data_without_any_keyword('sweets.db')
+    create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
     # データベースの内容を表示
     display_database_contents('sweets.db')
-
