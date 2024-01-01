@@ -1,25 +1,74 @@
 # teamD
 
 ## 動かし方
-- config.pyファイルを「teamD / config.py」のように配置する。<br>
-- app.pyを実行しブラウザで表示させるとindex.htmlが表示される。<br>
-※Dockerの設定はまだなのでflask,requestsなどのインストールが必要
+    ・ config.pyファイルを「teamD / config.py」に配置する。
+    ・ app.pyを実行しブラウザで表示させるとindex.htmlが表示される。
 
-## フロント
-- tmplates / index.html<br>
-データベースからID,Name,imageを表示させる<br>
-
-### データベースから情報を取得する方法
-以下の7つのデータベースの情報を持った変数を用意しました！
-
-- お菓子の虜 APIから取得できる変数(6種類) : snack,chocolate,cookie,candy,rice_cracker,limited_sweets<br>
-
-- Instagram APIから取得できる変数 : instagram
+    ※Dockerの設定はまだなのでflask,requestsなどのインストールが必要
 
 
-これらの変数はapp.pyからindex.htmlに渡されているので、{{snack.image}}や{{chocolate.name}}のようにアクセスすることで、画像や名前などが取得できます。<br>
+## ファイル説明
+    フロントエンド
+    ・templates / index.html : データベースからID,Name,imageを表示させる
 
-### お菓子の虜 API　の変数から取得できる11種類のデータ<br>
+    バックエンド
+    ・app.py
+    データベースに接続し、htmlファイルにデータを渡す。実行すると、URLがタ ーミナルに表示されるのでブラウザで開くと、コンテンツが表示される。
+
+    ・database.py
+    データベースの表示や保存など基本操作の関数が入っている。実行するとsweets.dbが作成される。
+    ※すでにsweets.dbが存在している状態で実行するとうまくいかないため、sweets.dbを消してから実行してください。
+
+    -----------------------------------
+    以下のファイルは実行しない
+    ・sweets.db : データベース
+    ・sweets_api.py : お菓子の虜APIを動かす。
+    ・instagram_api.py : Instagram APIを動かす。    
+
+    ・config.py
+    instagram APIを使用するためのビジネスIDとアクセストークンの情報が入っている。
+    ※git hub上に公開することはセキュリティ上の問題があるため各自でteamDディレクトリの配下に置いてください。 
+
+## データベースから情報を取得する方法
+
+### Instagramデータベース
+    配列'instagram'にいいね数が多い順に投稿データが格納されている。(4位以下はニュースに使う？)
+
+    instagram[0] ← 1位
+    instagram[1] ← 2位
+    instagram[2] ← 3位
+    ...
+
+    instagram[n].〇〇で投稿データにアクセスできる
+    ※ n=0,1,2,3,...
+
+|  instagram.〇〇  | 意味 |
+| ---- | ---- |
+|id | ID |
+|like | いいね数 |
+|comment | コメント数 |
+|follower| フォロワー数 |
+|post| 投稿数 |
+|text| 投稿文|
+|image| 画像 |
+|username| 名前 |
+|link| Instagramの投稿リンク |
+|date| 投稿日時 |
+
+### お菓子の虜データベース
+    配列'snack', 'chocolate', 'cookie', 'candy', 'japanese', 'limited'にそれぞれ最新順にデータが格納されている。
+
+    snack[0] ← 最新のスナック菓子
+    snack[1]  
+    snack[2]  
+    ...
+
+    snack[n].〇〇で投稿データにアクセスできる
+    ※n=0,1,2,3,...,29(それぞれ最新データ30個登録してます！)
+
+
+
+
 |  snack.〇〇  | 意味 |
 | ---- | ---- |
 |id | ID |
@@ -35,61 +84,15 @@
 |comment | 投稿文 |
 
 ※1 kanaは結構欠損が多かったので使わない方向で<br>
-※2 登録日であって、発売日ではないため不要<br>
+※2 登録日であって、発売日ではないから不要<br>
 
-'id', 'caption', 'media_url', 'permalink', 'timestamp', 'username', 'followers_count', 'media_count']
+### HTMLでの書き方
+    以上で述べた変数を{{}}でくくって使用する。
+    例
+    {{snack[0].image}} ← スナック菓子の画像
+    {{chocolate[1].name}} ← チョコの名前
 
-### Instagram API　の変数から取得できる8つのデータ<br>
-|  instagram.〇〇  | 意味 |
-| ---- | ---- |
-|id | ID |
-|caption | 投稿文 |
-|media_url | 画像url |
-|permalink| その記事のリンク |
-|timestamp | 投稿時間 |
-|username | ユーザーの名前 |
-|followers_count| フォロワー数 |
-|media_count | 投稿数|<br>
-
-※いいねとコメントが取得できていないことに今書きながら気づきました。。。<br>
-年明けにやります😢
-
-
-## バック
-- app.py<br>
-データベースに接続し、htmlファイルにデータを渡す<br>
-実行すると、URLがターミナルに表示されるのでブラウザで開くと、コンテンツが表示される。
-
-- database.py<br>
-データベースの表示や保存など基本操作の関数が入っている。<br>
-実行するとsweets.dbが作成される。<br>
-※すでに作成されている状態で実行するとうまくいかないため、sweets.dbを消してから実行することを推奨。
-
--------
-ここから下のファイルは実行しない
-
-- sweets.db<br>
- データベース(snack,chocolate,cookie,candy,rice_cracker,limited_sweets,instagramの7つのテーブルがある。)
-
-- sweets_api.py<br>
-お菓子の虜APIを動かす。<br>
-
-- instagram_api.py<br>
-Instagram APIを動かす。<br>
-ひとまず検索するユーザを指定し、最新の10件の投稿をデータベースに登録している。<br>
-
-- config.py<br>
-instagram APIを使用するためのビジネスIDとアクセストークンの情報が入っている。<br>
-※git hub上に公開することはセキュリティ上の問題があるため各自でteamDディレクトリの配下に置いてください。 
-
-### データベースの構成
-
-| id | name | kana | maker | price | type | registration_date | url | tags | image | comment |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |  ---- | ---- |
-| 11291 |  |  |  |  |  |  |  |  |  |  |
-| 11277 |  |  |  |  |  |  |  |  |  |  |
-| 11262 |  |  |  |  |  |  |  |  |  |  |
-
+## データベースの構成
 sweets.dbには以下の7つのテーブルがある。<br>
 Snack : スナック<br>
 Chocolate : チョコレート<br>
