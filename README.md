@@ -101,6 +101,7 @@ Candy : 飴・ガム<br>
 Rice_cracker : せんべい・和風<br>
 Limited_sweets : 限定品<br>
 Instagram : インスタの投稿<br>
+OrderedInstagram : Instagramテーブルをいいねの多い順に並び替えたver
 
 
 
