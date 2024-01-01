@@ -1,5 +1,5 @@
 # instagram.py
-
+import sys
 import requests
 import json
 import database
@@ -29,7 +29,11 @@ def instagram_to_database(account_list):
 
 # ビジネスディスカバリーAPIを叩く関数
 def business_discovery_api(insta_account_name):
-    url = f'https://graph.facebook.com/v17.0/{insta_business_id}?fields=business_discovery.username({insta_account_name})%7Bfollowers_count,media_count,media.limit%2810%29%7Bcaption,media_url,permalink,timestamp,username,children%7Bmedia_url%7D%7D%7D&access_token={access_token}'
+    #url = f'https://graph.facebook.com/v17.0/{insta_business_id}?fields=business_discovery.username({insta_account_name})%7Bfollowers_count,media_count,media.limit(10)%7Bcaption,media_url,permalink,timestamp,username,like_count,comments_count,children%7Bmedia_url%7D%7D,insights.metric(impressions)%7D&access_token={access_token}'
+
+    #url = f'https://graph.facebook.com/v17.0/{insta_business_id}?fields=business_discovery.username({insta_account_name})%7Bfollowers_count,media_count,media.limit(10)%7Bcaption,media_url,permalink,timestamp,username,like_count,comments_count,children%7Bmedia_url%7D%7D,impressions%7D&access_token={access_token}'
+    url = f'https://graph.facebook.com/v17.0/{insta_business_id}?fields=business_discovery.username({insta_account_name})%7Bfollowers_count,media_count,media.limit(10)%7Bcaption,media_url,permalink,timestamp,username,like_count,comments_count,children%7Bmedia_url%7D%7D%7D&access_token={access_token}'
+    #url = f'https://graph.facebook.com/v17.0/{insta_business_id}?fields=business_discovery.username({insta_account_name})%7Bfollowers_count,media_count,media.limit%2810%29%7Bcaption,media_url,permalink,timestamp,username,children%7Bmedia_url%7D%7D%7D&access_token={access_token}'
     #url = f'https://graph.facebook.com/v17.0/{insta_business_id}?fields=business_discovery.username({insta_account_name})%7Bfollowers_count,media_count,media.limit(1)%7Bcaption,media_url,permalink,timestamp,username,children%7Bmedia_url%7D%7D%7D&access_token={access_token}'
     response = instagram_api(url, 'GET', '')
     try:
@@ -38,6 +42,8 @@ def business_discovery_api(insta_account_name):
             data = response.json()
             #print(data)  # 返り値①
             #print(data['business_discovery']['media']['data'])  # 返り値②
+            #print(data)
+            #sys.exit()
             database.save_data(data,'Instagram','sweets.db')
             return data
         else:
