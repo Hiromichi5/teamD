@@ -12,21 +12,25 @@ class Sweets:
         self.maker = maker
         self.price = price
         self.type = type
-        self.registration_date = registration_date
-        self.url = url
-        self.tags = tags
+        self.date = registration_date
+        self.link = url
+        self.tag = tags
         self.image = image
-        self.comment = comment
+        self.text = comment
 
 class Insta:
-    def __init__(self, id, caption, media_url, permalink, timestamp, username, followers_count, media_count):
-        self.caption = caption
-        self.media_url = media_url
-        self.permalink = permalink
-        self.timestamp = timestamp
+    def __init__(self, id, like_count, comments_count,followers_count, media_count,caption, media_url, permalink, timestamp, username):
+        self.id = id
+        self.text = caption
+        self.image = media_url
+        self.link = permalink
+        self.date = timestamp
         self.username = username
-        self.followers_count = followers_count
-        self.media_count = media_count
+        self.follower = followers_count
+        self.post = media_count
+        self.like = like_count
+        self.comment = comments_count
+        #self.impressions = impressions
 
 def get_data_from_database(table_name):
     # SQLiteデータベースに接続
@@ -39,7 +43,7 @@ def get_data_from_database(table_name):
 
     # 接続を閉じる
     connection.close()
-    if table_name != 'Instagram':
+    if table_name != 'OrderedInstagram':
         # Sweetsクラスのインスタンスを生成してリストに追加
         sweets_list = [Sweets(*item) for item in data]
     else:
@@ -49,20 +53,24 @@ def get_data_from_database(table_name):
 
 app = Flask(__name__)
 
+# データベースからデータを取得（例として各テーブルを取得）
+snack = get_data_from_database('Snack')
+chocolate = get_data_from_database('Chocolate')
+cookie = get_data_from_database('Cookie')
+candy = get_data_from_database('Candy')
+japanese = get_data_from_database('Rice_cracker')
+limited = get_data_from_database('Limited_sweets')
+instagram = get_data_from_database('OrderedInstagram')
+
 @app.route('/')
 def index():
-    # データベースからデータを取得（例として各テーブルを取得）
-    snack = get_data_from_database('Snack')
-    chocolate = get_data_from_database('Chocolate')
-    cookie = get_data_from_database('Cookie')
-    candy = get_data_from_database('Candy')
-    rice_cracker = get_data_from_database('Rice_cracker')
-    limited_sweets = get_data_from_database('Limited_sweets')
-    instagram = get_data_from_database('Instagram')
-
     # index.htmlにデータを渡して表示
-    return render_template('index.html', snack=snack, chocolate=chocolate, cookie=cookie, candy=candy, rice_cracker=rice_cracker, limited_sweets=limited_sweets, instagram=instagram)
+    return render_template('index.html', snack=snack, chocolate=chocolate, cookie=cookie, candy=candy, japanese=japanese, limited=limited, instagram=instagram)
 
+#@app.route('/chocolate')
+#def chocolate():
+    # chocolate.htmlにデータを渡して表示
+    #return render_template('chocolate.html', chocolate=chocolate_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
