@@ -1,12 +1,12 @@
 <!-- index.html -->
 
-<!-- お菓子の虜 API -->
-<!--インスタンス名：snack, chocolate, cookie, candy, japanese, limited -->
-<!--id, name, kana, maker ,price, type, date, link, tag, image, text-->
-
-<!-- Instagram API -->
+<!-- Instagramデータベース -->
 <!--インスタンス名：instagram-->
 <!--id, like, comment, follower, post, text, image, username, link, date-->
+
+<!-- お菓子の虜データベース -->
+<!--インスタンス名：snack, chocolate, cookie, candy, japanese, limited -->
+<!--id, name, kana, maker ,price, type, date, link, tag, image, text-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,7 @@
     <title>Sweets Database</title>
 </head>
 <body>
-    <h1>Instagramテーブルの使い方</h1>
+    <h1>Instagramデータベースの使い方</h1>
     <h2>例</h2>
     いいね数 : 
     {{instagram[0].like}} (← instagram[0].like)<br>
@@ -31,7 +31,7 @@
     投稿文 : <br>
     {{instagram[0].text}} (← instagram[0].text)<br>
 
-    <h1>お菓子の虜テーブルの使い方</h1>
+    <h1>お菓子の虜データベースの使い方</h1>
     <h2>例：個別に表示</h2>
     ID : {{chocolate[0].id}} <br>
     名前 : {{chocolate[0].name}}<br>
