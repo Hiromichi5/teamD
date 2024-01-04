@@ -1,7 +1,7 @@
 # teamD
 
 ## 動かし方
-    ・ config.pyファイルを「teamD / config.py」に配置する。
+    ・ config.pyファイルを「teamD / config.py」に配置する。(データベースを作り直す場合のみ)
     ・ app.pyを実行しブラウザで表示させるとindex.htmlが表示される。
 
     ※Dockerの設定はまだなのでflask,requestsなどのインストールが必要
