@@ -7,11 +7,12 @@ sweets_type = [1, 2, 3, 4, 5, 99]
 table_names = ['Snack', 'Chocolate', 'Cookie', 'Candy', 'Rice_cracker', 'Limited_sweets']
 def sweet_to_database():
     for i, table_name in zip(sweets_type, table_names):
-        params = {"apikey": api_key, "format": "json", "type": i, "max":30}
+        params = {"apikey": api_key, "format": "json", "type": i, "max":10}
         #type
         #1:スナック, 2:チョコ, 3:クッキー・洋菓子, 4:飴・ガム, 5:せんべい・和風, 99:限定お菓子
         try:
-            # Web APIにリクエストを送信
+            # お菓子の虜 APIにリクエストを送信
+            print("お菓子の虜 APIにリクエストを送信中("+str(table_name)+")")
             response = requests.get(url, params=params)
 
             # レスポンスが成功 (HTTP ステータスコード 200) の場合
