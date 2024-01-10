@@ -1,6 +1,6 @@
 
 # app.py
-
+import database
 import sqlite3
 from flask import Flask, render_template
 
@@ -51,26 +51,37 @@ def get_data_from_database(table_name):
 
     return sweets_list
 
-app = Flask(__name__)
-
-# データベースからデータを取得（例として各テーブルを取得）
-snack = get_data_from_database('Snack')
-chocolate = get_data_from_database('Chocolate')
-cookie = get_data_from_database('Cookie')
-candy = get_data_from_database('Candy')
-japanese = get_data_from_database('Rice_cracker')
-limited = get_data_from_database('Limited_sweets')
-instagram = get_data_from_database('OrderedInstagram')
-
-@app.route('/')
-def index():
-    # index.htmlにデータを渡して表示
-    return render_template('index.html', snack=snack, chocolate=chocolate, cookie=cookie, candy=candy, japanese=japanese, limited=limited, instagram=instagram)
-
-#@app.route('/chocolate')
-#def chocolate():
-    # chocolate.htmlにデータを渡して表示
-    #return render_template('chocolate.html', chocolate=chocolate_data)
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    # print("データベース作成:")
+    # account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson']
+    # database.create_database()
+    # database.instagram_api.instagram_to_database(account_list)
+    # database.sweets_api.sweet_to_database()
+    # database.delete_instagram_data_without_any_keyword('sweets.db')
+    # database.create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
+    print("---------------------")
+
+    app = Flask(__name__)
+
+    # データベースからデータを取得（例として各テーブルを取得）
+    snack = get_data_from_database('Snack')
+    chocolate = get_data_from_database('Chocolate')
+    cookie = get_data_from_database('Cookie')
+    candy = get_data_from_database('Candy')
+    japanese = get_data_from_database('Rice_cracker')
+    limited = get_data_from_database('Limited_sweets')
+    instagram = get_data_from_database('OrderedInstagram')
+
+    @app.route('/')
+    def index():
+        # index.htmlにデータを渡して表示
+        return render_template('index.html', snack=snack, chocolate=chocolate, cookie=cookie, candy=candy, japanese=japanese, limited=limited, instagram=instagram)
+
+    # @app.route('/chocolate')
+    # def chocolate():
+    #     #chocolate.htmlにデータを渡して表示
+    #     return render_template('chocolate.html', snack=snack, chocolate=chocolate, cookie=cookie, candy=candy, japanese=japanese, limited=limited, instagram=instagram)
+    
+    
+    
+    app.run(debug=False)
