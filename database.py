@@ -6,127 +6,130 @@ import instagram_api
 import sweets_api
 import json
 import sys
+import tqdm
 
-# SQLiteデータベースに接続
-conn = sqlite3.connect('sweets.db')
-cursor = conn.cursor()
 
-# テーブルの作成（初回のみ実行）
-#1:スナック, 2:チョコ, 3:クッキー・洋菓子, 4:飴・ガム, 5:せんべい・和風, 99:限定お菓子
-#属性['id', 'name', 'kana', 'maker', 'price', 'type', 'registration_date', 'url', 'tags', 'image', 'comment']
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Snack (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        kana TEXT,
-        maker TEXT,
-        price REAL,
-        type TEXT,
-        registration_date DATE,
-        url TEXT,
-        tags TEXT,
-        image TEXT,
-        comment TEXT
-    )
-''')
+def create_database():
+    # SQLiteデータベースに接続
+    conn = sqlite3.connect('sweets.db')
+    cursor = conn.cursor()
 
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Chocolate (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        kana TEXT,
-        maker TEXT,
-        price REAL,
-        type TEXT,
-        registration_date DATE,
-        url TEXT,
-        tags TEXT,
-        image TEXT,
-        comment TEXT
-    )
-''')
+    # テーブルの作成（初回のみ実行）
+    #1:スナック, 2:チョコ, 3:クッキー・洋菓子, 4:飴・ガム, 5:せんべい・和風, 99:限定お菓子
+    #属性['id', 'name', 'kana', 'maker', 'price', 'type', 'registration_date', 'url', 'tags', 'image', 'comment']
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Snack (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            kana TEXT,
+            maker TEXT,
+            price REAL,
+            type TEXT,
+            registration_date DATE,
+            url TEXT,
+            tags TEXT,
+            image TEXT,
+            comment TEXT
+        )
+    ''')
 
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Cookie (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        kana TEXT,
-        maker TEXT,
-        price REAL,
-        type TEXT,
-        registration_date DATE,
-        url TEXT,
-        tags TEXT,
-        image TEXT,
-        comment TEXT
-    )
-''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Chocolate (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            kana TEXT,
+            maker TEXT,
+            price REAL,
+            type TEXT,
+            registration_date DATE,
+            url TEXT,
+            tags TEXT,
+            image TEXT,
+            comment TEXT
+        )
+    ''')
 
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Candy (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        kana TEXT,
-        maker TEXT,
-        price REAL,
-        type TEXT,
-        registration_date DATE,
-        url TEXT,
-        tags TEXT,
-        image TEXT,
-        comment TEXT
-    )
-''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Cookie (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            kana TEXT,
+            maker TEXT,
+            price REAL,
+            type TEXT,
+            registration_date DATE,
+            url TEXT,
+            tags TEXT,
+            image TEXT,
+            comment TEXT
+        )
+    ''')
 
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Rice_cracker (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        kana TEXT,
-        maker TEXT,
-        price REAL,
-        type TEXT,
-        registration_date DATE,
-        url TEXT,
-        tags TEXT,
-        image TEXT,
-        comment TEXT
-    )
-''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Candy (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            kana TEXT,
+            maker TEXT,
+            price REAL,
+            type TEXT,
+            registration_date DATE,
+            url TEXT,
+            tags TEXT,
+            image TEXT,
+            comment TEXT
+        )
+    ''')
 
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Limited_sweets (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        kana TEXT,
-        maker TEXT,
-        price REAL,
-        type TEXT,
-        registration_date DATE,
-        url TEXT,
-        tags TEXT,
-        image TEXT,
-        comment TEXT
-    )
-''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Rice_cracker (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            kana TEXT,
+            maker TEXT,
+            price REAL,
+            type TEXT,
+            registration_date DATE,
+            url TEXT,
+            tags TEXT,
+            image TEXT,
+            comment TEXT
+        )
+    ''')
 
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Instagram (
-        id TEXT PRIMARY KEY,
-        like_count INTEGER,
-        comments_count INTEGER,
-        followers_count INTEGER,
-        media_count INTEGER,
-        caption TEXT,
-        media_url TEXT,
-        permalink TEXT,
-        timestamp TEXT,
-        username TEXT
-    )
-''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Limited_sweets (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            kana TEXT,
+            maker TEXT,
+            price REAL,
+            type TEXT,
+            registration_date DATE,
+            url TEXT,
+            tags TEXT,
+            image TEXT,
+            comment TEXT
+        )
+    ''')
 
-conn.commit()
-conn.close()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Instagram (
+            id TEXT PRIMARY KEY,
+            like_count INTEGER,
+            comments_count INTEGER,
+            followers_count INTEGER,
+            media_count INTEGER,
+            caption TEXT,
+            media_url TEXT,
+            permalink TEXT,
+            timestamp TEXT,
+            username TEXT
+        )
+    ''')
+
+    conn.commit()
+    conn.close()
 
 # データベースを全表示する関数
 def display_database_contents(database_file):
@@ -206,7 +209,7 @@ def save_data(data, table_name, database_file):
             conn = sqlite3.connect(database_file)
             cursor = conn.cursor()
 
-            print("テーブル：",table_name)
+            #print("テーブル：",table_name)
             for item in data['item']:
                 # 空の辞書が返される時はNoneにする
                 kana_json = None if isinstance(item['kana'], dict) else item['kana']
@@ -233,7 +236,7 @@ def save_data(data, table_name, database_file):
                     item['image'],
                     item.get('comment', '')
                 ))
-                print(f'お菓子 {item["id"]} をデータベースに保存しました.')
+                #print(f'お菓子 {item["id"]} をデータベースに保存しました.')
 
             conn.commit()
         except Exception as e:
@@ -248,7 +251,7 @@ def save_data(data, table_name, database_file):
             # SQLiteデータベースに接続
             conn = sqlite3.connect(database_file)
             cursor = conn.cursor()
-            limit = 10# 先頭の10件だけを処理
+            limit = 5# 先頭の10件だけを処理
             for item in data['business_discovery']['media']['data'][:limit]:
                 try:
                     media_url_json = None if 'media_url' not in item else str(item['media_url'])
@@ -344,14 +347,18 @@ def delete_instagram_data_without_any_keyword(database_file):
         # SQLiteデータベースに接続
         conn = sqlite3.connect(database_file)
         cursor = conn.cursor()
-
+        #チョコ、アイス、和菓子、グミ、
         # 指定された条件に基づいてデータを削除
         cursor.execute('''
             DELETE FROM Instagram
             WHERE NOT (
-                caption LIKE '%新発売%'
-                OR caption LIKE '%新作%'
-                OR caption LIKE '%発売中%'
+                (caption LIKE '%発売%'
+                OR caption LIKE '%新作%')
+                AND NOT (caption LIKE '%スターバックス%' 
+                       OR caption LIKE '%マクドナルド%' 
+                       OR caption LIKE '%ミスタードーナツ%'
+                       OR caption LIKE '%3選%'
+                       OR media_url LIKE '%.mp4%')
             );
         ''')
 
@@ -368,7 +375,7 @@ def delete_instagram_data_without_any_keyword(database_file):
             conn.close()
 
 if __name__ == "__main__":
-
+    create_database()
     # データベースに保存
     #save_data(data, 'Instagram', 'sweets.db')
     account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson']
@@ -378,4 +385,4 @@ if __name__ == "__main__":
     delete_instagram_data_without_any_keyword('sweets.db')
     create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
     # データベースの内容を表示
-    display_database_contents('sweets.db')
+    #display_database_contents('sweets.db')
