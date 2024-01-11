@@ -51,7 +51,7 @@ def get_data_from_database(table_name):
 
     return sweets_list
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./static/")
 
 # データベースからデータを取得（例として各テーブルを取得）
 snack = get_data_from_database('Snack')
@@ -67,10 +67,41 @@ def index():
     # index.htmlにデータを渡して表示
     return render_template('index.html', snack=snack, chocolate=chocolate, cookie=cookie, candy=candy, japanese=japanese, limited=limited, instagram=instagram)
 
-#@app.route('/chocolate')
-#def chocolate():
+@app.route('/snack')
+def snack_detail():
     # chocolate.htmlにデータを渡して表示
-    #return render_template('chocolate.html', chocolate=chocolate_data)
+    return render_template('detail.html', items = snack, genre='snack')
+
+
+@app.route('/chocolate')
+def choco_detail():
+    # chocolate.htmlにデータを渡して表示
+    return render_template('detail.html',items = chocolate, genre='choco')
+
+
+@app.route('/cookie')
+def cookie_detail():
+    # chocolate.htmlにデータを渡して表示
+    return render_template('detail.html', items = cookie, genre='cookie')
+
+
+@app.route('/candy')
+def candy_detail():
+    # chocolate.htmlにデータを渡して表示
+    return render_template('detail.html', items = candy, genre='candy')
+
+
+@app.route('/senbei')
+def senbei_detail():
+    # chocolate.htmlにデータを渡して表示
+    return render_template('detail.html', items = japanese, genre='japanese')
+
+
+@app.route('/others')
+def others_detail():
+    # chocolate.htmlにデータを渡して表示
+    return render_template('detail.html', items=limited, genre='limited')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

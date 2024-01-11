@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap");
+
+body {
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+h2 {
+  font-weight: 600;
+  padding: 50px 0;
+  text-align: center;
+}
+p {
+  font-size: 18px;
+}
+.container {
+  padding-bottom: 50px;
+}
+.fa-solid {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-style: normal;
+  padding-right: 5px;
+}
+
+.logo {
+  border-radius: 50%;
+  margin: 0 10px;
+}
+.navbar {
+  background-color: #ffd44d;
+  z-index: 2;
+}
+.navbar-brand {
+  font-size: 25px;
+  font-weight: 600;
+}
+.sns-ranking {
+  background-color: #faf9f5;
+
+  /* background-image: url("img/home-bg1.png");
+  background-size: cover;
+  background-position: center; */
+}
+.ranking-card {
+  border: #ffd44d 8px solid;
+  border-radius: 10px;
+  margin: 0 3px;
+  background-color: #fff;
+}
+.latest-info {
+  /* background-image: url("img/home-bg3.png"); */
+  background-color: #ffd44d;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 2;
+}
+.latest-info .row .col .card {
+  border-radius: 10px;
+  box-shadow: rgba(20, 9, 0, 0.25) 2px 2px 1px 0px;
+  border: none;
+  z-index: 3;
+}
+
+.latest-info .row .col .card img {
+  height: 120px;
+  width: auto;
+  object-fit: contain;
+}
+.latest-info .row .col .card .card-body {
+  border-radius: 10px 10px 0 0;
+}
+
+.latest-info .row .col .card h4 {
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+}
+
+#latest-snack .card-body {
+  background-color: #4ba2e0;
+}
+
+#latest-choco .card-body {
+  background-color: #a22900;
+}
+
+#latest-cookie .card-body {
+  background-color: #fd8808;
+}
+#latest-candy .card-body {
+  background-color: #fe6f95;
+}
+#latest-senbei .card-body {
+  background-color: #65c026;
+}
+#latest-others .card-body {
+  background-color: #bf68ab;
+}
+
+/* detail.html */
+h2 span {
+  display: block;
+  font-size: 25px;
+  width: 250px;
+  color: white;
+  text-align: center;
+  margin: 10px auto;
+  padding: 6px 0px;
+}
+#heading-snack {
+  background-color: #4ba2e0;
+}
+#heading-choco {
+  background-color: #a22900;
+}
+#heading-cookie {
+  background-color: #fd8808;
+}
+#heading-candy {
+  background-color: #fe6f95;
+}
+#heading-japanese {
+  background-color: #65c026;
+}
+#heading-limited {
+  background-color: #bf68ab;
+}
+.item-detail {
+  background-color: #faf9f5;
+}
+.item-detail .row .col {
+  border-radius: 10px;
+  z-index: 2;
+}
+.item-card {
+  border: #ffd44d 8px solid;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.item-card div img {
+  width: calc(100% - 30px);
+  height: 180px;
+  object-fit: contain;
+  margin: 10px 15px 5px 15px;
+}
+.item-card div p {
+  margin: 10px;
+}
+
+.item-card div {
+  height: 250px;
+}
