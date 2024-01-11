@@ -60,11 +60,61 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
           {% for item in items %}
           <div class="col py-3">
-            <div class="mx-1 py-3 align-items-center item-card">
+            <div
+              class="mx-1 py-3 align-items-center item-card openModalBtn"
+              data-modal-id="modalArea_{{item.id}}"
+            >
               <div>
                 <img src="{{ item.image }}" alt="" />
                 <p class="text-center">{{item.name}}</p>
               </div>
+            </div>
+          </div>
+
+          <div id="modalArea_{{item.id}}" class="modalArea">
+            <div id="modalBg_{{item.id}}" class="modalBg"></div>
+            <div class="modalWrapper">
+              <div class="modalContents">
+                <h3 class="my-3">{{item.name}}</h3>
+                <div class="row my-3 row-cols-1 row-cols-md-2">
+                  <div class="col-12 col-md-5">
+                    <img src="{{item.image}}" class="img-fluid" />
+                  </div>
+                  <div class="col-12 col-md-7">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <th scope="row">商品名</th>
+                          <td>{{item.name}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">メーカー</th>
+                          <td>{{item.maker}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">値段</th>
+                          {% if item.price != None %}
+                          <td>{{ item.price }}円</td>
+                          {% endif %}
+                        </tr>
+                        <tr>
+                          <th scope="row">商品紹介URL</th>
+                          <td>{{item.url}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">タグ</th>
+                          <td>{{item.tags}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">コメント</th>
+                          <td>{{item.comment}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div id="closeModal_{{item.id}}" class="closeModal">×</div>
             </div>
           </div>
           {% endfor %}
@@ -173,6 +223,18 @@
           maxSize: 100,
           minSize: 50,
           shadow: false,
+        });
+      });
+
+      $(function () {
+        $(".openModalBtn").click(function () {
+          var modalId = $(this).data("modal-id");
+          $("#" + modalId).fadeIn();
+        });
+
+        $(".closeModal, .modalBg").click(function () {
+          var modalId = $(this).closest(".modalArea").attr("id");
+          $("#" + modalId).fadeOut();
         });
       });
     </script>
