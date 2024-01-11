@@ -41,40 +41,7 @@
         class="vw-100"
       />
     </header>
-    <!-- <h1>Instagramデータベースの使い方</h1>
-    <h2>例</h2>
-    いいね数 : {{instagram[0].like}} (← instagram[0].like)<br />
-    コメント数 : {{instagram[0].comment}} (← instagram[0].comment)<br />
-    フォロワー数 : {{instagram[0].follower}} (← instagram[0].follower)<br />
-    投稿数 : {{instagram[0].post}} (← instagram[0].post)<br />
-    投稿リンク : {{chocolate[0].link}} (← chocolate[0].link)<br />
-    投稿文 : <br />
-    {{instagram[0].text}} (← instagram[0].text)<br />
 
-    <h1>お菓子の虜データベースの使い方</h1>
-    <h2>例：個別に表示</h2>
-    ID : {{chocolate[0].id}} <br />
-    名前 : {{chocolate[0].name}}<br />
-    メーカー : {{chocolate[0].maker}}<br />
-    タイプ : {{chocolate[0].type}}<br />
-    リンク : {{chocolate[0].link}}<br />
-    タグ : {{chocolate[0].tag}}<br />
-    画像 : <br />
-    <img src="{{ chocolate[0].image }}" alt="Sweets Image" /> <br />
-    投稿文 :{{chocolate[0].text}}<br />
-
-    <h2>まとめて表示</h2>
-    <ul>
-      {% for item in chocolate %}
-      <li>
-        <strong>ID:</strong> {{ item.id }}<br />
-        <strong>Name:</strong> {{ item.name }}<br />
-        <img src="{{ item.image }}" alt="Sweets Image" />
-        <hr />
-      </li>
-      {% endfor %}
-    </ul>
-    <a href="./chocolate">チョコレートのページへ</a> -->
     <section class="sns-ranking move-box">
       <h2>SNS人気ランキング</h2>
       <div class="container">
@@ -173,13 +140,13 @@
             </a>
           </div>
           <div class="col">
-            <a href="./senbei" class="text-decoration-none">
-              <div class="card h-100" id="latest-senbei">
+            <a href="./japanese" class="text-decoration-none">
+              <div class="card h-100" id="latest-japanese">
                 <div class="card-body">
                   <h4>せんべい・和風</h4>
                 </div>
                 <img
-                  src="{{url_for('static', filename='/img/icon-senbei.png')}}"
+                  src="{{url_for('static', filename='/img/icon-japanese.png')}}"
                   class="card-img-bottom"
                   alt="..."
                 />
@@ -187,13 +154,13 @@
             </a>
           </div>
           <div class="col">
-            <a href="./others" class="text-decoration-none">
-              <div class="card h-100" id="latest-others">
+            <a href="./limited" class="text-decoration-none">
+              <div class="card h-100" id="latest-limited">
                 <div class="card-body">
                   <h4>限定お菓子</h4>
                 </div>
                 <img
-                  src="{{url_for('static', filename='/img/icon-others.png')}}"
+                  src="{{url_for('static', filename='/img/icon-limited.png')}}"
                   class="card-img-bottom"
                   alt="..."
                 />

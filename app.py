@@ -66,7 +66,7 @@ if __name__ == '__main__':
     @app.route('/')
     def index():
         # index.htmlにデータを渡して表示
-        return render_template('index.html', snack=snack, chocolate=chocolate, cookie=cookie, candy=candy, japanese=japanese, limited=limited, instagram=instagram)
+        return render_template('index.html', instagram=instagram)
 
     @app.route('/snack')
     def snack_detail():
@@ -92,14 +92,14 @@ if __name__ == '__main__':
         return render_template('detail.html', items = candy, genre='candy')
 
 
-    @app.route('/senbei')
-    def senbei_detail():
+    @app.route('/japanese')
+    def japanese_detail():
         # chocolate.htmlにデータを渡して表示
         return render_template('detail.html', items = japanese, genre='japanese')
 
 
-    @app.route('/others')
-    def others_detail():
+    @app.route('/limited')
+    def limited_detail():
         # chocolate.htmlにデータを渡して表示
         return render_template('detail.html', items=limited, genre='limited')
 
