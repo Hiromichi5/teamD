@@ -358,6 +358,7 @@ def delete_instagram_data_without_any_keyword(database_file):
                        OR caption LIKE '%マクドナルド%' 
                        OR caption LIKE '%ミスタードーナツ%'
                        OR caption LIKE '%3選%'
+                       OR caption LIKE '%レシピ'
                        OR media_url LIKE '%.mp4%')
             );
         ''')
@@ -378,7 +379,7 @@ if __name__ == "__main__":
     create_database()
     # データベースに保存
     #save_data(data, 'Instagram', 'sweets.db')
-    account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson']
+    account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson','meiji_essel_supercup','calbee_jp','ghana_recipe']
     #account_list = ['yorushika_official_']
     instagram_api.instagram_to_database(account_list)
     sweets_api.sweet_to_database()
