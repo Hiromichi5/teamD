@@ -45,6 +45,7 @@ def business_discovery_api(insta_account_name):
             return data
         else:
             print('Instagram APIのリクエストでエラーが発生しました。')
+            check_response(response)
             return None
     except Exception as error:
         print('Instagram APIのレスポンスの解析中にエラーが発生しました:', error)
@@ -61,8 +62,29 @@ def instagram_api(url, method, access_token):
     except Exception as error:
         print('Instagram APIのリクエスト中にエラーが発生しました:', error)
         return None
+def check_response(response):
+    # ステータスコードを確認
+    status_code = response.status_code
+    print(f"Status Code: {status_code}")
+
+    # ステータスコードに応じて処理を分岐
+    if status_code == 200:
+        # 成功時の処理
+        data = response.json()
+        print(data)
+    elif status_code == 400:
+        # バッドリクエストの場合の処理
+        print("Bad Request: クライアントのリクエストが不正です。")
+    elif status_code == 401:
+        # 認証エラーの場合の処理
+        print("Unauthorized: 認証が必要です。")
+    # 他のステータスコードに対する処理も追加できます
+    else:
+        # その他の場合の処理
+        print(f"Unexpected Status Code: {status_code}")
 
 if __name__ == "__main__":
+    database.create_database()
     # ビジネスアカウントIDとアクセストークンを設定
     #insta_account_name = 'sweetroad7'  # 取得したいアカウントID名
     account_list = ['sweetroad7']
@@ -70,3 +92,4 @@ if __name__ == "__main__":
     # instagram_basic_display_api_profile(INSTA_BUSINESS_ID, ACCESS_TOKEN)
     #print(business_discovery_api(insta_account_name))
     instagram_to_database(account_list)
+    database.display_database_contents('sweets.db')
