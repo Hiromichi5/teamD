@@ -7,7 +7,7 @@ sweets_type = [1, 2, 3, 4, 5, 99]
 table_names = ['Snack', 'Chocolate', 'Cookie', 'Candy', 'Rice_cracker', 'Limited_sweets']
 def sweet_to_database():
     for i, table_name in zip(sweets_type, table_names):
-        params = {"apikey": api_key, "format": "json", "type": i, "max":10}
+        params = {"apikey": api_key, "format": "json", "type": i, "max":30}
         #type
         #1:スナック, 2:チョコ, 3:クッキー・洋菓子, 4:飴・ガム, 5:せんべい・和風, 99:限定お菓子
         try:
