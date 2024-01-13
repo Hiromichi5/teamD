@@ -23,7 +23,7 @@ def create_database():
             name TEXT,
             kana TEXT,
             maker TEXT,
-            price REAL,
+            price INTEGER,
             type TEXT,
             registration_date DATE,
             url TEXT,
@@ -39,7 +39,7 @@ def create_database():
             name TEXT,
             kana TEXT,
             maker TEXT,
-            price REAL,
+            price INTEGER,
             type TEXT,
             registration_date DATE,
             url TEXT,
@@ -55,7 +55,7 @@ def create_database():
             name TEXT,
             kana TEXT,
             maker TEXT,
-            price REAL,
+            price INTEGER,
             type TEXT,
             registration_date DATE,
             url TEXT,
@@ -71,7 +71,7 @@ def create_database():
             name TEXT,
             kana TEXT,
             maker TEXT,
-            price REAL,
+            price INTEGER,
             type TEXT,
             registration_date DATE,
             url TEXT,
@@ -87,7 +87,7 @@ def create_database():
             name TEXT,
             kana TEXT,
             maker TEXT,
-            price REAL,
+            price INTEGER,
             type TEXT,
             registration_date DATE,
             url TEXT,
@@ -103,7 +103,7 @@ def create_database():
             name TEXT,
             kana TEXT,
             maker TEXT,
-            price REAL,
+            price INTEGER,
             type TEXT,
             registration_date DATE,
             url TEXT,
@@ -235,6 +235,7 @@ def save_data(data, table_name, database_file):
                     tags_json,
                     item['image'],
                     item.get('comment', '')
+
                 ))
                 #print(f'お菓子 {item["id"]} をデータベースに保存しました.')
 
@@ -376,14 +377,14 @@ def delete_instagram_data_without_any_keyword(database_file):
             conn.close()
 
 if __name__ == "__main__":
-    create_database()
+    #create_database()
     # データベースに保存
     #save_data(data, 'Instagram', 'sweets.db')
-    account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson','meiji_essel_supercup','calbee_jp','ghana_recipe']
+    #account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson','meiji_essel_supercup','calbee_jp','ghana_recipe']
     #account_list = ['yorushika_official_']
-    instagram_api.instagram_to_database(account_list)
-    sweets_api.sweet_to_database()
-    delete_instagram_data_without_any_keyword('sweets.db')
-    create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
+    #instagram_api.instagram_to_database(account_list)
+    #sweets_api.sweet_to_database()
+    #delete_instagram_data_without_any_keyword('sweets.db')
+    #create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
     # データベースの内容を表示
-    #display_database_contents('sweets.db')
+    display_database_contents('sweets.db')
