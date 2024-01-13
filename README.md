@@ -77,9 +77,9 @@
 |maker | メーカー |
 |price | 値段 |
 |type | 種類 |
-|registration_date | 登録日 ※2 |
+|data | 登録日 ※2 |
 |url | 商品紹介ページのURL |
-|tags | タグ |
+|tag | タグ |
 |image | 画像のURL |
 |comment | 投稿文 |
 
