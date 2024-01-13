@@ -178,6 +178,8 @@ h2 span {
   max-width: 50%;
   padding: 10px 30px;
   background-color: #fff;
+  max-height: 100%;
+  overflow-y: scroll;
 }
 .modalContents h3 {
   padding: 5px;

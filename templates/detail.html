@@ -80,7 +80,7 @@
                   <div class="col-12 col-md-5">
                     <img src="{{item.image}}" class="img-fluid" />
                   </div>
-                  <div class="col-12 col-md-7">
+                  <div class="col-12 col-md-7 d-none d-sm-block">
                     <table class="table">
                       <tbody>
                         <tr>
@@ -111,6 +111,32 @@
                         </tr>
                       </tbody>
                     </table>
+                  </div>
+                  <div class="col-12 col-md-7 d-sm-none d-block">
+                    <p>
+                      <span class="fw-semibold">商品名</span><br />
+                      {{item.name}}
+                    </p>
+                    <p>
+                      <span class="fw-semibold">メーカー</span><br />
+                      {{item.maker}}
+                    </p>
+                    <p>
+                      <span class="fw-semibold">値段</span><br />
+                      {% if item.price != None %} {{ item.price }}円 {% endif %}
+                    </p>
+                    <p>
+                      <span class="fw-semibold">商品紹介URL</span><br />
+                      {{item.url}}
+                    </p>
+                    <p>
+                      <span class="fw-semibold">タグ</span><br />
+                      {{item.tags}}
+                    </p>
+                    <p>
+                      <span class="fw-semibold">コメント</span><br />
+                      {{item.comment}}
+                    </p>
                   </div>
                 </div>
               </div>
