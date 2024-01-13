@@ -52,6 +52,16 @@ def get_data_from_database(table_name):
     return sweets_list
 
 if __name__ == '__main__':
+
+    # print("データベース作成:")
+    # account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson','meiji_essel_supercup','calbee_jp','ghana_recipe']
+    # database.create_database()
+    # database.instagram_api.instagram_to_database(account_list)
+    # database.sweets_api.sweet_to_database()
+    # database.delete_instagram_data_without_any_keyword('sweets.db')
+    # database.create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
+    # print("---------------------")
+
     app = Flask(__name__, static_folder="./static/")
 
     # データベースからデータを取得（例として各テーブルを取得）
@@ -103,6 +113,4 @@ if __name__ == '__main__':
         # chocolate.htmlにデータを渡して表示
         return render_template('detail.html', items=limited, genre='limited')
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
