@@ -218,8 +218,8 @@ def save_data(data, table_name, database_file):
                 type_json = None if isinstance(item['type'], dict) else item['type']
                 
                 # 'tags'が存在しない場合はNoneを登録
-                tags_json = None if 'tags' not in item else str(item['tags'])
-
+                tags_json = None if 'tags' not in item else str(item['tags']['tag'])
+                
                 # データベースに挿入
                 cursor.execute(f'''
                     INSERT INTO {table_name} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
