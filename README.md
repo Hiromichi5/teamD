@@ -79,7 +79,7 @@
 |type | 種類 |
 |data | 登録日 ※2 |
 |url | 商品紹介ページのURL |
-|tag | タグ |
+|tags | タグ |
 |image | 画像のURL |
 |comment | 投稿文 |
 
