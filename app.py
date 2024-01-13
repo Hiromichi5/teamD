@@ -13,10 +13,10 @@ class Sweets:
         self.price = price
         self.type = type
         self.date = registration_date
-        self.link = url
+        self.url = url
         self.tag = tags
         self.image = image
-        self.text = comment
+        self.comment = comment
 
 class Insta:
     def __init__(self, id, like_count, comments_count,followers_count, media_count,caption, media_url, permalink, timestamp, username):
