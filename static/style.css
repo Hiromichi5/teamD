@@ -46,6 +46,16 @@ p {
   border-radius: 10px;
   margin: 0 3px;
   background-color: #fff;
+  padding: 10px;
+}
+.ranking-card img {
+  height: 250px;
+  width: 90%;
+  object-fit: contain;
+}
+.ranking-card p {
+  font-size: 20px;
+  margin: 10px 0px;
 }
 .latest-info {
   /* background-image: url("img/home-bg3.png"); */

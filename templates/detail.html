@@ -65,6 +65,7 @@
               data-modal-id="modalArea_{{item.id}}"
             >
               <div>
+                <p>{{item.data}}</p>
                 <img src="{{ item.image }}" alt="" />
                 <p class="text-center">{{item.name}}</p>
               </div>
@@ -92,6 +93,10 @@
                           <td>{{item.maker}}</td>
                         </tr>
                         <tr>
+                          <th scope="row">登録日</th>
+                          <td>{{ item.data }}</td>
+                        </tr>
+                        <tr>
                           <th scope="row">値段</th>
                           {% if item.price != None %}
                           <td>{{ item.price }}円</td>
@@ -103,7 +108,9 @@
                         </tr>
                         <tr>
                           <th scope="row">タグ</th>
-                          <td>{{item.tags}}</td>
+                          {% if item.tags != None %}
+                          <td>{{ item.tags }}</td>
+                          {% endif %}
                         </tr>
                         <tr>
                           <th scope="row">コメント</th>
@@ -122,6 +129,10 @@
                       {{item.maker}}
                     </p>
                     <p>
+                      <span class="fw-semibold">登録日</span><br />
+                      {{item.data}}
+                    </p>
+                    <p>
                       <span class="fw-semibold">値段</span><br />
                       {% if item.price != None %} {{ item.price }}円 {% endif %}
                     </p>
@@ -131,7 +142,7 @@
                     </p>
                     <p>
                       <span class="fw-semibold">タグ</span><br />
-                      {{item.tags}}
+                      {% if item.tags != None %}{{item.tags}} {% endif %}
                     </p>
                     <p>
                       <span class="fw-semibold">コメント</span><br />
