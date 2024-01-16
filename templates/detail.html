@@ -61,13 +61,13 @@
           {% for item in items %}
           <div class="col py-3">
             <div
-              class="mx-1 py-3 align-items-center item-card openModalBtn"
+              class="mx-1 align-items-center item-card openModalBtn d-flex justify-content-center"
               data-modal-id="modalArea_{{item.id}}"
             >
               <div>
-                <p>{{item.date}}</p>
                 <img src="{{ item.image }}" alt="" />
                 <p class="text-center">{{item.name}}</p>
+                <p class="text-center">（ {{item.date}}登録 ）</p>
               </div>
             </div>
           </div>
@@ -104,7 +104,11 @@
                         </tr>
                         <tr>
                           <th scope="row">商品紹介URL</th>
-                          <td>{{item.url}}</td>
+                          <td>
+                            <a class="text-break" href="{{item.url}}"
+                              >{{item.url}}</a
+                            >
+                          </td>
                         </tr>
                         <tr>
                           <th scope="row">タグ</th>
@@ -114,7 +118,9 @@
                         </tr>
                         <tr>
                           <th scope="row">コメント</th>
+                          {% autoescape false %}
                           <td>{{item.comment}}</td>
+                          {% endautoescape %}
                         </tr>
                       </tbody>
                     </table>
@@ -138,7 +144,7 @@
                     </p>
                     <p>
                       <span class="fw-semibold">商品紹介URL</span><br />
-                      {{item.url}}
+                      <a class="text-break" href="{{item.url}}">{{item.url}}</a>
                     </p>
                     <p>
                       <span class="fw-semibold">タグ</span><br />
@@ -146,7 +152,8 @@
                     </p>
                     <p>
                       <span class="fw-semibold">コメント</span><br />
-                      {{item.comment}}
+                      {% autoescape false %} {{item.comment}} {% endautoescape
+                      %}
                     </p>
                   </div>
                 </div>

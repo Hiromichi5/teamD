@@ -147,6 +147,7 @@ h2 span {
   border: #ffd44d 8px solid;
   background-color: #fff;
   border-radius: 10px;
+  height: 350px;
 }
 
 .item-card div img {
@@ -159,9 +160,6 @@ h2 span {
   margin: 10px;
 }
 
-.item-card div {
-  height: 250px;
-}
 /* モーダルCSS */
 .modalArea {
   display: none;
@@ -185,7 +183,7 @@ h2 span {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 70%;
-  max-width: 50%;
+  max-width: 70%;
   padding: 10px 30px;
   background-color: #fff;
   max-height: 100%;
