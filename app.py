@@ -54,7 +54,16 @@ def get_data_from_database(table_name):
 if __name__ == '__main__':
 
     # print("データベース作成:")
-    # account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson','meiji_essel_supercup','calbee_jp','ghana_recipe']
+    # account_list = ['sweetroad7',
+    #                 'matchannel_official',
+    #                 'seven_eleven_japan',
+    #                 'familymart.japan',
+    #                 'akiko_lawson',
+    #                 'meiji_kanto',
+    #                 'calbee_jp',
+    #                 'ghana_recipe',
+    #                 'morinaga_seika',
+    #                 'bourbon_jp']
     # database.create_database()
     # database.instagram_api.instagram_to_database(account_list)
     # database.sweets_api.sweet_to_database()
