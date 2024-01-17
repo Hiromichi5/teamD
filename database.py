@@ -354,12 +354,22 @@ def delete_instagram_data_without_any_keyword(database_file):
             DELETE FROM Instagram
             WHERE NOT (
                 (caption LIKE '%発売%'
-                OR caption LIKE '%新作%')
+                OR caption LIKE '%新作%'
+                OR caption LIKE '%新登場%'
+                OR caption LIKE '%新商品%'
+                OR caption LIKE '%期間限定%')
                 AND NOT (caption LIKE '%スターバックス%' 
                        OR caption LIKE '%マクドナルド%' 
                        OR caption LIKE '%ミスタードーナツ%'
                        OR caption LIKE '%3選%'
                        OR caption LIKE '%レシピ'
+                       OR caption LIKE '%コスメ%'
+                       OR caption LIKE '%スーパーカップ%'
+                       OR caption LIKE '%アイス%'
+                       OR caption LIKE '%ドリンク%'
+                       OR caption LIKE '%ラテ%'
+                       OR caption LIKE '%からあげ%'
+                       OR caption LIKE '%商業施設%'
                        OR media_url LIKE '%.mp4%')
             );
         ''')
