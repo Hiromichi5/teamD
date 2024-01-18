@@ -256,12 +256,13 @@ def save_data(data, table_name, database_file):
             for item in data['business_discovery']['media']['data'][:limit]:
                 try:
                     media_url_json = None if 'media_url' not in item else str(item['media_url'])
+                    like_count = None if 'like_count' not in item else str(item['like_count'])
                     # データベースに挿入
                     cursor.execute(f'''
                         INSERT INTO {table_name} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ''', (
                         item['id'],
-                        item['like_count'],
+                        like_count,
                         item['comments_count'],
                         data['business_discovery']['followers_count'],
                         data['business_discovery']['media_count'],
