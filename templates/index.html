@@ -35,6 +35,9 @@
       src="https://kit.fontawesome.com/a0cc861018.js"
       crossorigin="anonymous"
     ></script>
+
+    <!-- マクロの定義 -->
+    {% import 'macros/linkCard.html' as macro1 with context %}
     <header class="vw-100 mp-4 move-box">
       <img
         src="{{url_for('static', filename='/img/home-okashi3.png')}}"
@@ -179,90 +182,18 @@
       <h2>最新情報</h2>
       <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
-          <div class="col">
-            <a href="./snack" class="text-decoration-none">
-              <div class="card h-100" id="latest-snack">
-                <div class="card-body">
-                  <h4>スナック</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-snack.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./chocolate" class="text-decoration-none">
-              <div class="card h-100" id="latest-choco">
-                <div class="card-body">
-                  <h4>チョコレート</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-choco.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./cookie" class="text-decoration-none">
-              <div class="card h-100" id="latest-cookie">
-                <div class="card-body">
-                  <h4>クッキー</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-cookie.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./candy" class="text-decoration-none">
-              <div class="card h-100" id="latest-candy">
-                <div class="card-body">
-                  <h4>アメ・ガム</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-candy.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./japanese" class="text-decoration-none">
-              <div class="card h-100" id="latest-japanese">
-                <div class="card-body">
-                  <h4>せんべい・和風</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-japanese.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./limited" class="text-decoration-none">
-              <div class="card h-100" id="latest-limited">
-                <div class="card-body">
-                  <h4>限定お菓子</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-limited.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
+          <!-- スナック -->
+          {{ macro1.generateLinkCard("snack") }}
+          <!-- チョコ -->
+          {{ macro1.generateLinkCard("choco") }}
+          <!-- クッキー -->
+          {{ macro1.generateLinkCard("cookie") }}
+          <!-- アメ・ガム -->
+          {{ macro1.generateLinkCard("candy") }}
+          <!-- せんべい・和風 -->
+          {{ macro1.generateLinkCard("japanese") }}
+          <!-- 限定お菓子 -->
+          {{ macro1.generateLinkCard("limited") }}
         </div>
       </div>
     </section>

@@ -26,6 +26,12 @@
       src="https://kit.fontawesome.com/a0cc861018.js"
       crossorigin="anonymous"
     ></script>
+
+    <!-- マクロの定義 -->
+    {% import 'macros/itemCard.html' as macro1 with context %} {% import
+    'macros/linkCard.html' as macro2 with context %} {% import
+    'macros/modalCard.html' as macro3 with context %}
+
     <nav class="navbar">
       <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="./">
@@ -40,130 +46,20 @@
         </a>
       </div>
     </nav>
+
     <section class="item-detail">
       <h2>
-        最新情報 {% if genre == 'snack' %}
-        <span id="heading-snack">スナック</span>
-        {% elif genre == 'choco' %}
-        <span id="heading-choco">チョコレート</span>
-        {% elif genre == 'cookie' %}
-        <span id="heading-cookie">クッキー</span>
-        {% elif genre == 'candy' %}
-        <span id="heading-candy">アメ・ガム</span>
-        {% elif genre == 'japanese' %}
-        <span id="heading-japanese">せんべい・和風</span>
-        {% elif genre == 'limited' %}
-        <span id="heading-limited">限定お菓子</span>
+        最新情報 {% set genre_dict = { "snack": "スナック", "choco":
+        "チョコレート","cookie": "クッキー", "candy": "アメ・ガム",
+        "japanese":"せんべい・和風", "limited": "限定お菓子" } %} {% if genre in
+        genre_dict%}
+        <span id="heading-{{ genre }}">{{ genre_dict[genre] }}</span>
         {% endif %}
       </h2>
       <div class="container">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-          {% for item in items %}
-          <div class="col py-3">
-            <div
-              class="mx-1 align-items-center item-card openModalBtn d-flex justify-content-center"
-              data-modal-id="modalArea_{{item.id}}"
-            >
-              <div>
-                <img src="{{ item.image }}" alt="" />
-                <p class="text-center">{{item.name}}</p>
-                <p class="text-center">（ {{item.date}}登録 ）</p>
-              </div>
-            </div>
-          </div>
-
-          <div id="modalArea_{{item.id}}" class="modalArea">
-            <div id="modalBg_{{item.id}}" class="modalBg"></div>
-            <div class="modalWrapper">
-              <div class="modalContents">
-                <h3 class="my-3">{{item.name}}</h3>
-                <div class="row my-3 row-cols-1 row-cols-md-2">
-                  <div
-                    class="col-12 col-md-5 d-flex align-content-center justify-content-center"
-                  >
-                    <img src="{{item.image}}" class="img-fluid" />
-                  </div>
-                  <div class="col-12 col-md-7 d-none d-sm-block">
-                    <table class="table">
-                      <tbody>
-                        <tr>
-                          <th scope="row">商品名</th>
-                          <td>{{item.name}}</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">メーカー</th>
-                          <td>{{item.maker}}</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">登録日</th>
-                          <td>{{ item.date }}</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">値段</th>
-                          {% if item.price != None %}
-                          <td>{{ item.price }}円</td>
-                          {% endif %}
-                        </tr>
-                        <tr>
-                          <th scope="row">商品紹介URL</th>
-                          <td>
-                            <a class="text-break" href="{{item.url}}"
-                              >{{item.url}}</a
-                            >
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">タグ</th>
-                          {% if item.tags != None %}
-                          <td>{{ item.tags }}</td>
-                          {% endif %}
-                        </tr>
-                        <tr>
-                          <th scope="row">コメント</th>
-                          {% autoescape false %}
-                          <td>{{item.comment}}</td>
-                          {% endautoescape %}
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-12 col-md-7 d-sm-none d-block">
-                    <p>
-                      <span class="fw-semibold">商品名</span><br />
-                      {{item.name}}
-                    </p>
-                    <p>
-                      <span class="fw-semibold">メーカー</span><br />
-                      {{item.maker}}
-                    </p>
-                    <p>
-                      <span class="fw-semibold">登録日</span><br />
-                      {{item.date}}
-                    </p>
-                    <p>
-                      <span class="fw-semibold">値段</span><br />
-                      {% if item.price != None %} {{ item.price }}円 {% endif %}
-                    </p>
-                    <p>
-                      <span class="fw-semibold">商品紹介URL</span><br />
-                      <a class="text-break" href="{{item.url}}">{{item.url}}</a>
-                    </p>
-                    <p>
-                      <span class="fw-semibold">タグ</span><br />
-                      {% if item.tags != None %}{{item.tags}} {% endif %}
-                    </p>
-                    <p>
-                      <span class="fw-semibold">コメント</span><br />
-                      {% autoescape false %} {{item.comment}} {% endautoescape
-                      %}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div id="closeModal_{{item.id}}" class="closeModal">×</div>
-            </div>
-          </div>
-          {% endfor %}
+          {% for item in items %} {{ macro1.generateItemCard(item) }} {{
+          macro3.generateModalCard(item) }} {% endfor %}
         </div>
       </div>
     </section>
@@ -171,90 +67,18 @@
       <h2>最新情報</h2>
       <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
-          <div class="col">
-            <a href="./snack" class="text-decoration-none">
-              <div class="card h-100" id="latest-snack">
-                <div class="card-body">
-                  <h4>スナック</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-snack.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./chocolate" class="text-decoration-none">
-              <div class="card h-100" id="latest-choco">
-                <div class="card-body">
-                  <h4>チョコレート</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-choco.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./cookie" class="text-decoration-none">
-              <div class="card h-100" id="latest-cookie">
-                <div class="card-body">
-                  <h4>クッキー</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-cookie.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./candy" class="text-decoration-none">
-              <div class="card h-100" id="latest-candy">
-                <div class="card-body">
-                  <h4>アメ・ガム</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-candy.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./japanese" class="text-decoration-none">
-              <div class="card h-100" id="latest-japanese">
-                <div class="card-body">
-                  <h4>せんべい・和風</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-japanese.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <a href="./limited" class="text-decoration-none">
-              <div class="card h-100" id="latest-limited">
-                <div class="card-body">
-                  <h4>限定お菓子</h4>
-                </div>
-                <img
-                  src="{{url_for('static', filename='/img/icon-limited.png')}}"
-                  class="card-img-bottom"
-                  alt="..."
-                />
-              </div>
-            </a>
-          </div>
+          <!-- スナック -->
+          {{ macro2.generateLinkCard("snack") }}
+          <!-- チョコ -->
+          {{ macro2.generateLinkCard("choco") }}
+          <!-- クッキー -->
+          {{ macro2.generateLinkCard("cookie") }}
+          <!-- アメ・ガム -->
+          {{ macro2.generateLinkCard("candy") }}
+          <!-- せんべい・和風 -->
+          {{ macro2.generateLinkCard("japanese") }}
+          <!-- 限定お菓子 -->
+          {{ macro2.generateLinkCard("limited") }}
         </div>
       </div>
     </section>

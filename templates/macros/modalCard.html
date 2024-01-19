@@ -1,0 +1,96 @@
+<!-- 詳細情報のモーダルカードの定義（スマートフォン幅の時のみ使用） -->
+{% macro generateModalCard_sm(item) %}
+<div class="col-12 col-md-7 d-sm-none d-block">
+  <p>
+    <span class="fw-semibold">商品名</span><br />
+    {{item.name}}
+  </p>
+  <p>
+    <span class="fw-semibold">メーカー</span><br />
+    {{item.maker}}
+  </p>
+  <p>
+    <span class="fw-semibold">登録日</span><br />
+    {{item.date}}
+  </p>
+  <p>
+    <span class="fw-semibold">値段</span><br />
+    {% if item.price != None %} {{ item.price }}円 {% endif %}
+  </p>
+  <p>
+    <span class="fw-semibold">商品紹介URL</span><br />
+    <a class="text-break" href="{{item.url}}">{{item.url}}</a>
+  </p>
+  <p>
+    <span class="fw-semibold">タグ</span><br />
+    {% if item.tags != None %}{{item.tags}} {% endif %}
+  </p>
+  <p>
+    <span class="fw-semibold">コメント</span><br />
+    {% autoescape false %} {{item.comment}} {% endautoescape %}
+  </p>
+</div>
+{% endmacro %}
+
+<!-- 詳細情報のモーダルカードの定義（PC幅） -->
+{% macro generateModalCard(item) %}
+<div id="modalArea_{{item.id}}" class="modalArea">
+  <div id="modalBg_{{item.id}}" class="modalBg"></div>
+  <div class="modalWrapper">
+    <div class="modalContents">
+      <h3 class="my-3">{{item.name}}</h3>
+      <div class="row my-3 row-cols-1 row-cols-md-2">
+        <div
+          class="col-12 col-md-5 d-flex align-content-center justify-content-center"
+        >
+          <img src="{{item.image}}" class="img-fluid" />
+        </div>
+        <div class="col-12 col-md-7 d-none d-sm-block">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <th scope="row">商品名</th>
+                <td>{{item.name}}</td>
+              </tr>
+              <tr>
+                <th scope="row">メーカー</th>
+                <td>{{item.maker}}</td>
+              </tr>
+              <tr>
+                <th scope="row">登録日</th>
+                <td>{{ item.date }}</td>
+              </tr>
+              <tr>
+                <th scope="row">値段</th>
+                {% if item.price != None %}
+                <td>{{ item.price }}円</td>
+                {% endif %}
+              </tr>
+              <tr>
+                <th scope="row">商品紹介URL</th>
+                <td>
+                  <a class="text-break" href="{{item.url}}">{{item.url}}</a>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">タグ</th>
+                {% if item.tags != None %}
+                <td>{{ item.tags }}</td>
+                {% endif %}
+              </tr>
+              <tr>
+                <th scope="row">コメント</th>
+                {% autoescape false %}
+                <td>{{item.comment}}</td>
+                {% endautoescape %}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {{ generateModalCard_sm(item) }}
+      </div>
+    </div>
+    <div id="closeModal_{{item.id}}" class="closeModal">×</div>
+  </div>
+</div>
+{% endmacro %}

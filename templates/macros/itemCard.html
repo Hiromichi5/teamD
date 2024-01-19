@@ -1,0 +1,15 @@
+<!-- 詳細情報のカードの定義 -->
+{% macro generateItemCard(item) %}
+<div class="col py-3">
+  <div
+    class="mx-1 align-items-center item-card openModalBtn d-flex justify-content-center"
+    data-modal-id="modalArea_{{item.id}}"
+  >
+    <div>
+      <img src="{{ item.image }}" alt="" />
+      <p class="text-center">{{item.name}}</p>
+      <p class="text-center">（ {{item.date}}登録 ）</p>
+    </div>
+  </div>
+</div>
+{% endmacro %}
