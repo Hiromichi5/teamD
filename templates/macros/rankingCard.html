@@ -1,0 +1,15 @@
+<!-- ランキングカードの定義 -->
+{% macro generateRankingCard(rank) %}
+<div
+  class="col py-2 col-12 col-lg-4 openModalBtn {% if rankå == 0 %}col-md-12{% else %}col-md-6{% endif %}"
+  data-modal-id="modalArea_{{ instagram[rank].id }}"
+>
+  <div class="ranking-card text-center">
+    <p class="text-center"><i class="fa-solid fa-crown"></i>{{ rank+1 }}位</p>
+    <img src="{{ instagram[rank].image }}" alt="" />
+    <p class="text-center">
+      <i class="fa-solid fa-heart"></i>{{ instagram[rank].like }}いいね
+    </p>
+  </div>
+</div>
+{% endmacro %}

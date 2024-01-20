@@ -1,0 +1,30 @@
+<!-- ジャンルごとの最新情報へのリンク付きカードの定義 -->
+{% macro generateLinkCard(next_genre) %}
+<!-- 名称の設定 -->
+{% set nextgenre_dict = { "snack": {'link': 'snack', 'id': 'snack', 'image':
+'snack', 'name': 'スナック'}, "choco": {'link': 'chocolate', 'id': 'choco',
+'image': 'choco', 'name': 'チョコレート'}, "cookie": {'link': 'cookie', 'id':
+'cookie', 'image': 'cookie', 'name': 'クッキー'}, "candy": {'link': 'candy',
+'id': 'candy', 'image': 'candy', 'name': 'アメ・ガム'}, "japanese": {'link':
+'japanese', 'id': 'japanese', 'image': 'japanese', 'name': 'せんべい・和風'},
+"limited": {'link': 'limited', 'id': 'limited', 'image': 'limited', 'name':
+'限定お菓子'} } %} {% if next_genre in nextgenre_dict %}
+<div class="col">
+  <a
+    href="./{{ nextgenre_dict[next_genre]['link'] }}"
+    class="text-decoration-none"
+  >
+    <div class="card h-100" id="latest-{{ nextgenre_dict[next_genre]['id'] }}">
+      <div class="card-body">
+        <h4>{{ nextgenre_dict[next_genre]['name'] }}</h4>
+      </div>
+
+      <img
+        src="{{ url_for('static', filename='/img/icon-%s.png' % next_genre )}}"
+        class="card-img-bottom"
+        alt="..."
+      />
+    </div>
+  </a>
+</div>
+{% endif %} {% endmacro %}
