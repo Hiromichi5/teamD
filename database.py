@@ -209,6 +209,13 @@ def save_data(data, table_name, database_file):
             conn = sqlite3.connect(database_file)
             cursor = conn.cursor()
 
+            # 既存のデータと新しいデータを比較し、idが一致するものがあれば削除
+            for item in data['item']:
+                existing_data = cursor.execute(f"SELECT * FROM {table_name} WHERE id = ?", (item['id'],)).fetchone()
+                if existing_data:
+                    cursor.execute(f"DELETE FROM {table_name} WHERE id = ?", (item['id'],))
+                    #print(f'ID {item["id"]} に関連する既存のデータを削除しました。')
+                    
             #print("テーブル：",table_name)
             for item in data['item']:
                 # 空の辞書が返される時はNoneにする
@@ -253,6 +260,13 @@ def save_data(data, table_name, database_file):
             conn = sqlite3.connect(database_file)
             cursor = conn.cursor()
             limit = 5# 先頭の10件だけを処理
+            
+            existing_ids = [row[0] for row in cursor.execute(f"SELECT id FROM {table_name}").fetchall()]
+
+            for item in data['business_discovery']['media']['data'][:limit]:
+                if item['id'] in existing_ids:
+                    cursor.execute(f"DELETE FROM {table_name} WHERE id = ?", (item['id'],))
+                
             for item in data['business_discovery']['media']['data'][:limit]:
                 try:
                     media_url_json = None if 'media_url' not in item else str(item['media_url'])
@@ -273,7 +287,7 @@ def save_data(data, table_name, database_file):
                         item['username']
                     ))
                     conn.commit()
-                    print(f'Instagramデータ {item["id"]} をデータベースに保存しました。')
+                    # print(f'Instagramデータ {item["id"]} をデータベースに保存しました。')
                 except Exception as e:
                     print(f'データベースへの保存中にエラーが発生しました: {e}')
                     print(f'エラーが発生したデータ: {item}')
@@ -306,6 +320,38 @@ def clear_database(database_file):
             cursor.execute(f"DELETE FROM {table_name};")
             print(f'{table_name} テーブルの内容を削除しました。')
 
+        # 変更をコミット
+        conn.commit()
+
+    except Exception as e:
+        print(f'データベース {database_file} の内容削除中にエラーが発生しました: {e}')
+
+    finally:
+        # データベース接続をクローズ
+        if conn:
+            conn.close()
+
+# OederedInstagramテーブルをまるごとを削除する関数
+def clear_OrderedInstagram(database_file):
+    try:
+        # SQLiteデータベースに接続
+        conn = sqlite3.connect(database_file)
+        cursor = conn.cursor()
+
+        # テーブル一覧を取得
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tables = cursor.fetchall()
+
+        if not tables:
+            print(f'データベース {database_file} にテーブルが存在しません。')
+            return
+
+        # 各テーブルの内容を削除
+        for table in tables:
+            table_name = table[0]
+            if table_name == 'OrderedInstagram':
+                cursor.execute(f"DROP TABLE {table_name};")
+                print(f'{table_name} テーブルを削除しました。')   
         # 変更をコミット
         conn.commit()
 
@@ -386,6 +432,46 @@ def delete_instagram_data_without_any_keyword(database_file):
         # データベース接続をクローズ
         if conn:
             conn.close()
+
+def update_database():
+    try:
+        print('データベースを更新します')
+        # データベースを削除
+        clear_OrderedInstagram('sweets.db')
+        
+        # 新しいデータを取得してデータベースに保存
+        # 例: インスタグラムAPIからデータを取得して保存する
+        account_list = ['sweetroad7',
+                        'matchannel_official',
+                        'seven_eleven_japan',
+                        'familymart.japan',
+                        'akiko_lawson',
+                        'meiji_kanto',
+                        'calbee_jp',
+                        'ghana_recipe',
+                        'morinaga_seika',
+                        'bourbon_jp']
+        instagram_api.instagram_to_database(account_list)
+        sweets_api.sweet_to_database()
+        delete_instagram_data_without_any_keyword('sweets.db')
+        create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
+
+        # 他のデータソースからデータを取得して保存する場合は、ここに追加
+        
+        print('データベースが更新されました。')
+
+    except Exception as e:
+        print(f'データベースの更新中にエラーが発生しました: {e}')
+
+def make_new_database():
+    print("0からデータベースを作成します")
+    create_database()
+    account_list = ['sweetroad7','matchannel_official','seven_eleven_japan','familymart.japan','akiko_lawson','meiji_essel_supercup','calbee_jp','ghana_recipe']
+    instagram_api.instagram_to_database(account_list)
+    sweets_api.sweet_to_database()
+    delete_instagram_data_without_any_keyword('sweets.db')
+    create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
+    print('データベースが作成されました。')
 
 if __name__ == "__main__":
     #create_database()
