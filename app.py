@@ -30,7 +30,6 @@ class Insta:
         self.post = media_count
         self.like = like_count
         self.comment = comments_count
-        #self.impressions = impressions
 
 def get_data_from_database(table_name):
     # SQLiteデータベースに接続
@@ -73,7 +72,7 @@ if __name__ == '__main__':
 
     app = Flask(__name__, static_folder="./static/")
 
-    # データベースからデータを取得（例として各テーブルを取得）
+    # データベースからデータを取得
     snack = get_data_from_database('Snack')
     chocolate = get_data_from_database('Chocolate')
     cookie = get_data_from_database('Cookie')
@@ -121,5 +120,6 @@ if __name__ == '__main__':
     def limited_detail():
         # chocolate.htmlにデータを渡して表示
         return render_template('detail.html', items=limited, genre='limited')
+    
+    app.run(host='0.0.0.0', port=8080)
 
-    app.run(debug=False)
