@@ -1,4 +1,3 @@
-
 # app.py
 import database
 import sqlite3
@@ -51,24 +50,13 @@ def get_data_from_database(table_name):
     return sweets_list
 
 if __name__ == '__main__':
-
-    # print("データベース作成:")
-    # account_list = ['sweetroad7',
-    #                 'matchannel_official',
-    #                 'seven_eleven_japan',
-    #                 'familymart.japan',
-    #                 'akiko_lawson',
-    #                 'meiji_kanto',
-    #                 'calbee_jp',
-    #                 'ghana_recipe',
-    #                 'morinaga_seika',
-    #                 'bourbon_jp']
-    # database.create_database()
-    # database.instagram_api.instagram_to_database(account_list)
-    # database.sweets_api.sweet_to_database()
-    # database.delete_instagram_data_without_any_keyword('sweets.db')
-    # database.create_ordered_table('sweets.db', 'Instagram', 'OrderedInstagram', 'like_count')
-    # print("---------------------")
+    #　データベースを0から作成する
+    # database.make_new_database()
+    
+    #　データベースを更新する
+    # database.update_database()
+    
+    print("---------------------")
 
     app = Flask(__name__, static_folder="./static/")
 
@@ -122,4 +110,3 @@ if __name__ == '__main__':
         return render_template('detail.html', items=limited, genre='limited')
     
     app.run(host='0.0.0.0', port=8080)
-
