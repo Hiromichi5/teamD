@@ -260,12 +260,9 @@ def save_data(data, table_name, database_file):
             conn = sqlite3.connect(database_file)
             cursor = conn.cursor()
             limit = 5# 先頭の10件だけを処理
-            
-            existing_ids = [row[0] for row in cursor.execute(f"SELECT id FROM {table_name}").fetchall()]
 
-            for item in data['business_discovery']['media']['data'][:limit]:
-                if item['id'] in existing_ids:
-                    cursor.execute(f"DELETE FROM {table_name} WHERE id = ?", (item['id'],))
+            for item in data['business_discovery']['media']['data'][:1]:
+                    cursor.execute(f"DELETE FROM {table_name} WHERE username = ?", (item['username'],))
                 
             for item in data['business_discovery']['media']['data'][:limit]:
                 try:
