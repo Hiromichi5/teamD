@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # database.make_new_database()
     
     #　データベースを更新する
-    # database.update_database()
+    database.update_database()
     
     print("---------------------")
 
